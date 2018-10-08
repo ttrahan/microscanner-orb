@@ -15,7 +15,7 @@ jobs:
           google-project-id: citric-biplane-94023
           image: sample-image
           tag: $CIRCLE_BRANCH.$CIRCLE_BUILD_NUMBER
-          path_to_Dockerfile: .
+          path-to-dockerfile: .
       - gcp-gcr/push-image:
           registry-url: us.gcr.io
           google-project-id: citric-biplane-94023
