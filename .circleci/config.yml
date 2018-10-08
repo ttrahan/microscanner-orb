@@ -8,7 +8,7 @@ jobs:
     executor: gcp-gcr/default
     steps:
       # test orb commands
-      - gcp-gcr/auth:
+      - gcp-gcr/gcr-auth:
           google-project-id: citric-biplane-94023
       - gcp-gcr/build-image:
           registry-url: us.gcr.io
