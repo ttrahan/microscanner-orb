@@ -136,7 +136,7 @@ commands:
             # Initialize gcloud CLI
             gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
             $SUDO gcloud --quiet config set project <<parameters.google-project-id>>
-            $SUDO gcloud --quiet config set compute/zone <<parameters.google-compute-zone>>
+            # $SUDO gcloud --quiet config set compute/zone <<parameters.google-compute-zone>>
             # configure Docker to use gcloud as a credential helper
             gcloud auth configure-docker --quiet --project <<parameters.google-project-id>>
             docker push <<parameters.registry-url>>/<<parameters.google-project-id>>/<<parameters.image>>:<<parameters.tag>>
