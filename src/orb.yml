@@ -177,10 +177,6 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - gcp-cli/initialize:
-          gcloud-service-key: <<parameters.gcloud-service-key>>
-          google-project-id: <<parameters.google-project-id>>
-          google-compute-zone: <<parameters.google-compute-zone>>
       - gcr-auth:
           google-project-id: <<parameters.google-project-id>>
       - build-image:
