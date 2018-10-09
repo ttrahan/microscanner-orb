@@ -73,10 +73,11 @@ commands:
       google-project-id:
         description: The Google project ID to connect with via the gcloud CLI
         type: string
+        default: $GOOGLE_PROJECT_ID
       image:
         description: A name for your docker image
         type: string
-        default: <<parameters.google-project-id>>
+        default: $GOOGLE_PROJECT_ID
       tag:
         description: A docker image tag
         type: string
@@ -99,10 +100,11 @@ commands:
       google-project-id:
         description: The Google project ID to connect with via the gcloud CLI
         type: string
+        default: $GOOGLE_PROJECT_ID
       image:
         description: A name for your docker image
         type: string
-        default: <<parameters.google-project-id>>
+        default: $GOOGLE_PROJECT_ID
       tag:
         description: A docker image tag
         type: string
@@ -135,9 +137,6 @@ jobs:
         description: The GCR registry URL from ['', us, eu, asia].gcr.io
         type: string
         default: gcr.io
-      google-project-id:
-        description: The Google project ID to connect with via the gcloud CLI
-        type: string
       image:
         description: A name for your docker image
         type: string
