@@ -114,7 +114,9 @@ commands:
     steps:
       - run:
           name: Push image to GCR
-          command: docker push <<parameters.registry-url>>/<<parameters.google-project-id>>/<<parameters.image>>:<<parameters.tag>>
+          command: |
+            gcloud auth login
+            docker push <<parameters.registry-url>>/<<parameters.google-project-id>>/<<parameters.image>>:<<parameters.tag>>
 jobs:
   build_and_push_image:
     description: Install GCP CLI, if needed, and configure. Build and push 
