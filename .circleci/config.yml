@@ -8,6 +8,8 @@ jobs:
     executor: gcp-gcr/default
     steps:
       # test orb commands
+      - checkout
+      - setup_remote_docker
       - gcp-gcr/gcr-auth:
           google-project-id: citric-biplane-94023
       - gcp-gcr/build-image:
