@@ -69,7 +69,9 @@ commands:
         default: $GOOGLE_COMPUTE_ZONE
     steps:
       - gcp-cli/install
-      - gcp-cli/initialize
+      - gcp-cli/initialize:
+          google-project-id: <<parameters.google-project-id>>
+          google-compute-zone: <<parameters.google-compute-zone>>
       - run:
           name: gcloud auth configure-docker
           command: |
@@ -129,14 +131,14 @@ commands:
       - run:
           name: Push image to GCR
           command: |
-            # Set sudo to work whether logged in as root user or non-root user
-            if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
-            # Initialize gcloud CLI
-            gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-            $SUDO gcloud --quiet config set project <<parameters.google-project-id>>
-            $SUDO gcloud --quiet config set compute/zone <<parameters.google-compute-zone>>
-            # configure Docker to use gcloud as a credential helper
-            gcloud auth configure-docker --quiet --project <<parameters.google-project-id>>
+            # # Set sudo to work whether logged in as root user or non-root user
+            # if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
+            # # Initialize gcloud CLI
+            # gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+            # $SUDO gcloud --quiet config set project <<parameters.google-project-id>>
+            # $SUDO gcloud --quiet config set compute/zone <<parameters.google-compute-zone>>
+            # # configure Docker to use gcloud as a credential helper
+            # gcloud auth configure-docker --quiet --project <<parameters.google-project-id>>
             docker push <<parameters.registry-url>>/<<parameters.google-project-id>>/<<parameters.image>>:<<parameters.tag>>
 jobs:
   build_and_push_image:
