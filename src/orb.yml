@@ -9,6 +9,8 @@ description: |
   CircleCI in order to use this orb - Docker, environment variables for GCP
   login ($GCLOUD_SERVICE_KEY)
 
+  TODO - add instructions for storing env variables
+
   The source for this Orb can be found here:
   https://github.com/CircleCI-Public/circleci-orbs/tree/master/src/gcp-gcr
 
@@ -150,13 +152,13 @@ jobs:
         type: string
         default: "."
     steps:
+      - checkout
+      - setup_remote_docker
       - gcp-cli/install
       - gcp-cli/initialize:
           gcloud-service-key: <<parameters.gcloud-service-key>>
           google-project-id: <<parameters.google-project-id>>
           google-compute-zone: <<parameters.google-compute-zone>>
-      - checkout
-      - setup_remote_docker
       - gcr-auth:
           google-project-id: <<parameters.google-project-id>>
       - build-image:
@@ -165,11 +167,9 @@ jobs:
           image: <<parameters.image>>
           tag: << parameters.tag >>
           path-to-dockerfile: <<parameters.path-to-dockerfile>>
-      - run:
+      - run: gcloud auth list
+      - push-image:
           registry-url: <<parameters.registry-url>>
           google-project-id: <<parameters.google-project-id>>
           image: <<parameters.image>>
           tag: << parameters.tag >>
-          command: |
-            gcloud config set account default
-            push-image
