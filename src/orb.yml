@@ -82,6 +82,9 @@ commands:
           paths:
             - .
             - .config/gcloud
+      - run: ls -al
+      - run: ls -al ~
+      - run: ls -al ~/.config/gcloud
   build-image:
     description: Build a docker image
     parameters:
