@@ -82,8 +82,8 @@ commands:
       - persist_to_workspace:
           root: ..
           paths:
-            - ${HOME}
-            - ${HOME}/.config/gcloud
+            - .
+            - .config/gcloud
       - run: which gcloud
       - run: ls -al
       - run: ls -al ${HOME}
