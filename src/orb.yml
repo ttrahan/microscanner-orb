@@ -133,9 +133,9 @@ commands:
         type: string
         default: "latest"
     steps:
-      - attach_workspace:
-          at: ${HOME}
-      - run: ls -al ${HOME}
+      # - attach_workspace:
+      #     at: ${HOME}
+      - run: gcloud config configurations list
       - run:
           name: Push image to GCR
           command: |
