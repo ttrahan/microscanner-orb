@@ -80,10 +80,10 @@ commands:
       - run: echo $CIRCLE_WORKING_DIRECTORY
       - run: ls -al $CIRCLE_WORKING_DIRECTORY
       - persist_to_workspace:
-          root: $CIRCLE_WORKING_DIRECTORY
+          root: /tmp/workspace
           paths:
-            - .
-            - .config/gcloud
+            - ${HOME}
+            - ${HOME}/.config/gcloud
       - run: which gcloud
       - run: ls -al
       - run: ls -al ${HOME}
@@ -139,8 +139,8 @@ commands:
         type: string
         default: "latest"
     steps:
-      # - attach_workspace:
-      #     at: ${HOME}
+      - attach_workspace:
+          at: /tmp/workspace
       - run: gcloud config configurations list
       - run:
           name: Push image to GCR
