@@ -135,8 +135,7 @@ commands:
     steps:
       - attach_workspace:
           at: ${HOME}
-      - run: ls ${HOME}
-      - run: cat ${HOME}/.config/gcloud
+      - run: ls -al ${HOME}
       - run:
           name: Push image to GCR
           command: |
