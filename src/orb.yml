@@ -78,7 +78,7 @@ commands:
             # configure Docker to use gcloud as a credential helper
             gcloud auth configure-docker --quiet --project <<parameters.google-project-id>>
       - persist_to_workspace:
-          root: /tmp/workspace
+          root: ..
           paths:
             - ${HOME}
             - ${HOME}/.config/gcloud
