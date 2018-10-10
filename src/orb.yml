@@ -77,6 +77,11 @@ commands:
           command: |
             # configure Docker to use gcloud as a credential helper
             gcloud auth configure-docker --quiet --project <<parameters.google-project-id>>
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+            - .config/gcloud
   build-image:
     description: Build a docker image
     parameters:
@@ -128,6 +133,10 @@ commands:
         type: string
         default: "latest"
     steps:
+      - attach_workspace:
+          at: ${HOME}
+      - run: ls ${HOME}
+      - run: cat ${HOME}/.config/gcloud
       - run:
           name: Push image to GCR
           command: |
@@ -135,7 +144,7 @@ commands:
             if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
             # Initialize gcloud CLI
             gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-            $SUDO gcloud --quiet config set project <<parameters.google-project-id>>
+            # $SUDO gcloud --quiet config set project <<parameters.google-project-id>>
             # $SUDO gcloud --quiet config set compute/zone <<parameters.google-compute-zone>>
             # configure Docker to use gcloud as a credential helper
             gcloud auth configure-docker --quiet --project <<parameters.google-project-id>>
