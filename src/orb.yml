@@ -77,8 +77,10 @@ commands:
           command: |
             # configure Docker to use gcloud as a credential helper
             gcloud auth configure-docker --quiet --project <<parameters.google-project-id>>
+      - run: echo $CIRCLE_WORKING_DIRECTORY
+      - run: ls -al $CIRCLE_WORKING_DIRECTORY
       - persist_to_workspace:
-          root: ~
+          root: $CIRCLE_WORKING_DIRECTORY
           paths:
             - .
             - .config/gcloud
