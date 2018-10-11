@@ -30,9 +30,9 @@ jobs:
 workflows:
   build_and_push_image:
     jobs:
-      # test orb commands
-      - test-orb-commands:
-          context: ttrahan
+      # # test orb commands
+      # - test-orb-commands:
+      #     context: ttrahan
 
       # test orb jobs
       - gcp-gcr/build_and_push_image:
@@ -44,4 +44,4 @@ workflows:
           tag: $CIRCLE_BRANCH.$CIRCLE_BUILD_NUMBER
 
       # # test orb jobs with default values only
-      - gcp-gcr/build_and_push_image
+      # - gcp-gcr/build_and_push_image

@@ -47,6 +47,28 @@ executors:
       enabled: true
 
 commands:
+  install-docker:
+    description: Install Docker client, if not available.
+    parameters:
+      version:
+        description: Docker version to install
+        type: string
+        default: 18.06.1-ce
+    steps:
+      - run:
+          name: Install Docker client
+          command: |
+            if [[ command -v docker == "" ]]; then
+              set -x
+              VER=<<parameters.version>>
+              curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
+              tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+              mv /tmp/docker/* /usr/bin
+              echo "Docker client installed."
+            else
+              echo "Docker client already installed."
+            fi
+
   gcr-auth:
     description: Configure Docker to use gcloud as a credential helper. Note 
                  that using this command requires the use of a 'machine' 
@@ -164,6 +186,7 @@ jobs:
         default: "."
     steps:
       - checkout
+      - install-docker
       - gcr-auth:
           google-project-id: <<parameters.google-project-id>>
           google-compute-zone: us-west1-b
