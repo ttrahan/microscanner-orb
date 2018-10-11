@@ -164,7 +164,6 @@ jobs:
         default: "."
     steps:
       - checkout
-      - setup_remote_docker
       - gcr-auth:
           google-project-id: <<parameters.google-project-id>>
           google-compute-zone: us-west1-b
