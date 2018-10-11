@@ -127,7 +127,7 @@ commands:
             # Initialize gcloud CLI
             docker push <<parameters.registry-url>>/<<parameters.google-project-id>>/<<parameters.image>>:<<parameters.tag>>
 jobs:
-  build_and_push_image_using_remote_docker:
+  build_and_push_image:
     description: Install GCP CLI, if needed, and configure. Build and push 
                  image to repository. Requires environment variables
                  for GCLOUD_SERVICE_KEY. We recommend these be saved in a 
