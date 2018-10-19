@@ -26,7 +26,7 @@ examples:
       workflows:
         build_and_push_image:
           jobs:
-            - gcp-gcr/build_and_push_image:
+            - gcp-gcr/build_and_push_image_using_remote_docker:
                 context: myContext # your context containing gcloud login variables
                 google-project-id: myGoogleProjectId
                 google-compute-zone: myGoogleComputeZone
@@ -39,21 +39,18 @@ orbs:
 
 executors:
   default:
-    description: A debian based docker container to use when running the
-                 gcloud CLI
-    parameters:
-      python-version:
-        type: string
-        default: "2.7"
-      debian-release:
-        type: string
-        default: "stretch"
-    docker:
-      - image: circleci/python:<< parameters.python-version >>-<< parameters.debian-release >>
+    description: A debian-based machine executor for use when running the gcloud
+                 CLI.  Note that there is an overhead for provisioning a machine
+                 executor as a result of spinning up a private Docker server.
+                 Use of the machine key may require additional fees.
+    machine: 
+      enabled: true
 
 commands:
   gcr-auth:
-    description: Configure Docker to use gcloud as a credential helper
+    description: Configure Docker to use gcloud as a credential helper. Note 
+                 that using this command requires the use of a 'machine' 
+                 executor.
     parameters:
       gcloud-service-key:
         description: The gcloud service key
@@ -75,8 +72,11 @@ commands:
       - run:
           name: gcloud auth configure-docker
           command: |
+            # Set sudo to work whether logged in as root user or non-root user
+            if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
+
             # configure Docker to use gcloud as a credential helper
-            gcloud auth configure-docker --quiet --project <<parameters.google-project-id>>
+            $SUDO gcloud auth configure-docker --quiet --project <<parameters.google-project-id>>
   build-image:
     description: Build a docker image
     parameters:
@@ -115,10 +115,6 @@ commands:
         description: The Google project ID to connect with via the gcloud CLI
         type: string
         default: $GOOGLE_PROJECT_ID
-      google-compute-zone:
-        description: The Google compute zone to connect with via the gcloud CLI
-        type: string
-        default: $GOOGLE_COMPUTE_ZONE
       image:
         description: A name for your docker image
         type: string
