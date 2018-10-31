@@ -127,7 +127,6 @@ commands:
       - run:
           name: Push image to GCR
           command: |
-            # Initialize gcloud CLI
             docker push <<parameters.registry-url>>/<<parameters.google-project-id>>/<<parameters.image>>:<<parameters.tag>>
 jobs:
   build_and_push_image:
