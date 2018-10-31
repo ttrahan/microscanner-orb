@@ -179,4 +179,4 @@ jobs:
           registry-url: <<parameters.registry-url>>
           google-project-id: <<parameters.google-project-id>>
           image: <<parameters.image>>
-          tag: <parameters.tag>>
+          tag: <<parameters.tag>>
