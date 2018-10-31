@@ -39,12 +39,12 @@ orbs:
 
 executors:
   default:
-    description: A debian-based machine executor for use when running the gcloud
-                 CLI.  Note that there is an overhead for provisioning a machine
-                 executor as a result of spinning up a private Docker server.
-                 Use of the machine key may require additional fees.
+    description: A debian-based machine executor.  Note that there is an 
+                 overhead for provisioning a machine executor as a result of
+                 spinning up a private Docker server. Use of the machine key
+                 may require additional fees.
     machine: 
-      enabled: true
+      image: circleci/classic:201808-01
 
 commands:
   gcr-auth:
@@ -167,59 +167,17 @@ jobs:
         default: "."
     steps:
       - checkout
-      - setup_remote_docker
+      - gcr-auth:
+          google-project-id: <<parameters.google-project-id>>
+          google-compute-zone: <<parameters.google-compute-zone>>
       - build-image:
           registry-url: <<parameters.registry-url>>
           google-project-id: <<parameters.google-project-id>>
           image: <<parameters.image>>
           tag: << parameters.tag >>
           path-to-dockerfile: <<parameters.path-to-dockerfile>>
-      - build-and-push-image:
-          parameters:
-            gcloud-service-key:
-              description: The gcloud service key
-              type: string
-              default: $GCLOUD_SERVICE_KEY
-            google-project-id:
-              description: The Google project ID to connect with via the gcloud CLI
-              type: string
-              default: $GOOGLE_PROJECT_ID
-            google-compute-zone:
-              description: The Google compute zone to connect with via the gcloud CLI
-              type: string
-              default: $GOOGLE_COMPUTE_ZONE
-            registry-url:
-              description: The GCR registry URL from ['', us, eu, asia].gcr.io
-              type: string
-              default: gcr.io
-            google-project-id:
-              description: The Google project ID to connect with via the gcloud CLI
-              type: string
-              default: $GOOGLE_PROJECT_ID
-            google-compute-zone:
-              description: The Google compute zone to connect with via the gcloud CLI
-              type: string
-              default: $GOOGLE_COMPUTE_ZONE
-            image:
-              description: A name for your docker image
-              type: string
-              default: $GOOGLE_PROJECT_ID
-            tag:
-              description: A docker image tag
-              type: string
-              default: "latest"
-          steps:
-            - gcp-cli/install
-            - gcp-cli/initialize:
-                google-project-id: <<parameters.google-project-id>>
-                google-compute-zone: <<parameters.google-compute-zone>>
-            - run:
-                name: gcloud auth configure-docker
-                command: |
-                  # configure Docker to use gcloud as a credential helper
-                  gcloud auth configure-docker --quiet --project <<parameters.google-project-id>>
-            - run:
-                name: Push image to GCR
-                command: |
-                  # Initialize gcloud CLI
-                  docker push <<parameters.registry-url>>/<<parameters.google-project-id>>/<<parameters.image>>:<<parameters.tag>>
+      - push-image:
+          registry-url: <<parameters.registry-url>>
+          google-project-id: <<parameters.google-project-id>>
+          image: <<parameters.image>>
+          tag: <parameters.tag>>
