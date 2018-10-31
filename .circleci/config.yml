@@ -4,7 +4,7 @@
 version: 2.1
 
 orbs:
-  gcp-gcr: ttrahan/gcp-gcr@dev:alpha
+  gcp-gcr: ttrahan/gcp-gcr@dev:beta
 
 jobs:
   test-orb-commands:
