@@ -35,7 +35,7 @@ examples:
                 tag: latest
 
 orbs:
-  gcp-cli: ttrahan/gcp-cli@dev:alpha
+  gcp-cli: ttrahan/gcp-cli@dev:beta
 
 executors:
   default:
