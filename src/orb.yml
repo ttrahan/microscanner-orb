@@ -71,7 +71,7 @@ commands:
 
 jobs:
   build-and-scan:
-    executor: microscanner/default
+    executor: default
     parameters:
       token:
         description: The Aqua microscanner token
@@ -91,6 +91,6 @@ jobs:
     steps:
       - checkout
       - run: docker build -t <<parameters.image>> <<parameters.dockerfile-path>>
-      - microscanner/install 
-      - microscanner/scan:
+      - install 
+      - scan:
           image: <<parameters.image>>

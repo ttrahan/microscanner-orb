@@ -1,5 +1,5 @@
 # CircleCI build config to test the 
-# Google Coud Platform Container Registry Orb published by CircleCI
+# Aquasec microscanner
 
 version: 2.1
 
