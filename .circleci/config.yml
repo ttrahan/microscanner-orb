@@ -12,7 +12,7 @@ jobs:
     steps:
       # test orb commands
       - checkout
-      - microscanner/install:
+      - microscanner/install 
 
 workflows:
   scan:
