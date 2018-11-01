@@ -6,7 +6,7 @@ description: |
   The executors within this Orb provide run-time environments that contain the
   necessary dependencies for executing the jobs and commands in this orb,
   except for the following required dependencies that must be configured in
-  CircleCI in order to use this orb - Docker, environment variables for GCP
+  CircleCI in order to use this orb - environment variables for GCP
   login ($GCLOUD_SERVICE_KEY)
 
   TODO - add instructions for storing env variables
@@ -175,6 +175,8 @@ jobs:
           image: <<parameters.image>>
           tag: << parameters.tag >>
           path-to-dockerfile: <<parameters.path-to-dockerfile>>
+      - run: ls -a /home/circleci
+      - run: ls -a /home/circleci/.docker
       - push-image:
           registry-url: <<parameters.registry-url>>
           google-project-id: <<parameters.google-project-id>>
