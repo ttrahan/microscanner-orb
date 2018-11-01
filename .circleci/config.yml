@@ -17,7 +17,7 @@ jobs:
       - microscanner/scan:
           # image: myrepo/myimage:latest
           image: circleci/node
-          artifact-type: html
+          artifact-type: json
       - store_artifacts:
           path: microscanner-wrapper
           

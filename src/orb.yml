@@ -42,7 +42,6 @@ commands:
     steps:
       - run: |
           git clone git@github.com:lukebond/microscanner-wrapper.git
-      - run: pwd && ls -a microscanner-wrapper
   scan:
     description: Scan container image
     parameters:
