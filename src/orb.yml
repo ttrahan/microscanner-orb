@@ -55,7 +55,7 @@ commands:
       artifact-type:
         description: The type of artifact to output
         type: string
-        default: json
+        default: html
     steps:
       # - run: |
       #     MICROSCANNER_TOKEN=<<parameters.token>> ./microscanner-wrapper/scan.sh <<parameters.image>> 
