@@ -15,7 +15,8 @@ jobs:
       - run: docker build -t myrepo/myimage:latest .
       - microscanner/install 
       - microscanner/scan:
-          image: myrepo/myimage:latest
+          # image: myrepo/myimage:latest
+          image: circleci/node
           artifact-type: html
       - store_artifacts:
           path: microscanner-wrapper
