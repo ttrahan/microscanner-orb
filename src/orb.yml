@@ -59,15 +59,16 @@ commands:
     steps:
       - run: |
           MICROSCANNER_TOKEN=<<parameters.token>> ./microscanner-wrapper/scan.sh <<parameters.image>> 
+      - run: mkdir output
       - run:
           name: create artifact
           # background: true
           command: |
             cd microscanner-wrapper
             if [[ <<parameters.artifact-type>> == json ]]; then
-              MICROSCANNER_TOKEN=<<parameters.token>> ./grabjson.sh <<parameters.image>> > output.json
+              MICROSCANNER_TOKEN=<<parameters.token>> ./grabjson.sh <<parameters.image>> > ../output/output.json
             else
-              MICROSCANNER_TOKEN=<<parameters.token>> ./grabhtml.sh <<parameters.image>> > output.html
+              MICROSCANNER_TOKEN=<<parameters.token>> ./grabhtml.sh <<parameters.image>> > ../output/output.html
             fi
 #   gcr-auth:
 #     description: Configure Docker to use gcloud as a credential helper. Note 
