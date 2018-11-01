@@ -53,17 +53,22 @@ commands:
       image:
         description: The image to scan
         type: string
-      artifact:
+      artifact-type:
         description: The type of artifact to output
         type: string
+        default: json
     steps:
       - run: |
-          MICROSCANNER_TOKEN=<<parameters.token>> MICROSCANNER_OPTIONS="--<<parameter.artifact>>" ./microscanner-wrapper/scan.sh <<parameters.image>> 
-          
-
-
-
-
+          MICROSCANNER_TOKEN=<<parameters.token>> ./microscanner-wrapper/scan.sh <<parameters.image>> 
+      - run:
+          name: create artifact
+          background: true
+          command: |
+            if [[ <<parameters.artifact-type>> == json ]]; then
+              MICROSCANNER_TOKEN=<<parameters.token>> ./microscanner-wrapper/grabjson.sh <<parameters.image>> > output.json
+            else
+              MICROSCANNER_TOKEN=<<parameters.token>> ./microscanner-wrapper/grabhtml.sh <<parameters.image>> > output.html
+            fi
 #   gcr-auth:
 #     description: Configure Docker to use gcloud as a credential helper. Note 
 #                  that using this command requires the use of a 'machine' 
