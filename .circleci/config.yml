@@ -16,6 +16,10 @@ jobs:
       - microscanner/install 
       - microscanner/scan:
           image: myrepo/myimage:latest
+          artifact: html
+      - store_artifacts:
+          path: microscanner-wrapper
+          
 
 workflows:
   scan:

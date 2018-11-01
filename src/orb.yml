@@ -53,9 +53,13 @@ commands:
       image:
         description: The image to scan
         type: string
+      artifact:
+        description: The type of artifact to output
+        type: string
     steps:
       - run: |
-          MICROSCANNER_TOKEN=<<parameters.token>> ./microscanner-wrapper/scan.sh <<parameters.image>> 
+          MICROSCANNER_TOKEN=<<parameters.token>> MICROSCANNER_OPTIONS="--<<parameter.artifact>>" ./microscanner-wrapper/scan.sh <<parameters.image>> 
+          
 
 
 
