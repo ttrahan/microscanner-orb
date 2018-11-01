@@ -43,6 +43,19 @@ commands:
       - run: |
           git clone git@github.com:lukebond/microscanner-wrapper.git
       - run: pwd && ls -a microscanner-wrapper
+  scan:
+    description: Scan container image
+    parameters:
+      token:
+        description: The Aqua microscanner token
+        type: string
+        default: $AQUA_TOKEN
+      image:
+        description: The image to scan
+        type: string
+    steps:
+      - run: |
+          MICROSCANNER_TOKEN=<<parameters.token>> ./microscanner-wrapper/scan.sh <<parameters.image>> 
 
 
 
