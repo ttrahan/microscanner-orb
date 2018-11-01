@@ -6,33 +6,29 @@ version: 2.1
 orbs:
   microscanner: ttrahan/microscanner@dev:alpha
 
-jobs:
-  test-orb-commands:
-    executor: microscanner/default
-    steps:
-      # test orb commands
-      - checkout
-      - run: docker build -t myrepo/myimage:latest .
-      - microscanner/install 
-      - microscanner/scan:
-          # image: myrepo/myimage:latest
-          image: circleci/node
+# jobs:
+#   test-orb-commands:
+#     executor: microscanner/default
+#     steps:
+#       # test orb commands
+#       - checkout
+#       - run: docker build -t myrepo/myimage:latest .
+#       - microscanner/install 
+#       - microscanner/scan:
+#           # image: myrepo/myimage:latest
+#           image: circleci/node
 
 workflows:
-  scan:
+  build-and-scan:
     jobs:
-      # test orb commands
-      - test-orb-commands:
-          context: ttrahan
-
-      # # test orb jobs
-      # - gcp-gcr/build_and_push_image:
+      # # test orb commands
+      # - test-orb-commands:
       #     context: ttrahan
-      #     google-project-id: citric-biplane-94023
-      #     google-compute-zone: us-west1-b
-      #     registry-url: us.gcr.io
-      #     image: sample-image
-      #     tag: $CIRCLE_BRANCH.$CIRCLE_BUILD_NUM
+
+      # test orb jobs
+      - microscanner/build-and-scan:
+          context: ttrahan
+          image: circleci/node:$CIRCLE_BRANCH.$CIRCLE_BUILD_NUM
 
       # # test orb jobs with default values only
       # - gcp-gcr/build_and_push_image:
