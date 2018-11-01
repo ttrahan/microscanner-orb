@@ -12,9 +12,10 @@ jobs:
     steps:
       # test orb commands
       - checkout
-      - docker build -t myrepo/myimage:latest .
+      - run: docker build -t myrepo/myimage:latest .
       - microscanner/install 
-      - microscanner/scan
+      - microscanner/scan:
+          image: myrepo/myimage:latest
 
 workflows:
   scan:
