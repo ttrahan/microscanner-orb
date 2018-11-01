@@ -57,8 +57,8 @@ commands:
         type: string
         default: json
     steps:
-      - run: |
-          MICROSCANNER_TOKEN=<<parameters.token>> ./microscanner-wrapper/scan.sh <<parameters.image>> 
+      # - run: |
+      #     MICROSCANNER_TOKEN=<<parameters.token>> ./microscanner-wrapper/scan.sh <<parameters.image>> 
       - run: mkdir output
       - run:
           name: create artifact
@@ -70,6 +70,8 @@ commands:
             else
               MICROSCANNER_TOKEN=<<parameters.token>> ./grabhtml.sh <<parameters.image>> > ../output/output.html
             fi
+      - store_artifacts:
+          path: output
 #   gcr-auth:
 #     description: Configure Docker to use gcloud as a credential helper. Note 
 #                  that using this command requires the use of a 'machine' 

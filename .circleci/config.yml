@@ -18,8 +18,8 @@ jobs:
           # image: myrepo/myimage:latest
           image: circleci/node
           artifact-type: json
-      # - store_artifacts:
-      #     path: microscanner-wrapper
+      - store_artifacts:
+          path: output
           
 
 workflows:
