@@ -62,7 +62,7 @@ commands:
           MICROSCANNER_TOKEN=<<parameters.token>> ./microscanner-wrapper/scan.sh <<parameters.image>> 
       - run:
           name: create artifact
-          background: true
+          # background: true
           command: |
             cd microscanner-wrapper
             if [[ <<parameters.artifact-type>> == json ]]; then
