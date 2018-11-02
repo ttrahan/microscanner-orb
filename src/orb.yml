@@ -17,8 +17,6 @@ examples:
             - microscanner/build-and-scan:
                 context: myContext # your context containing gcloud login variables
                 image: my-image # your image name
-                tag: latest
-                artifact-type: html
 
 executors:
   default:

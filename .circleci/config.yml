@@ -19,7 +19,7 @@ orbs:
 #           image: circleci/node
 
 workflows:
-  build-and-scan:
+  scan-image:
     jobs:
       # # test orb commands
       # - test-orb-commands:
