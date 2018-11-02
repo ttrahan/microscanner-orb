@@ -12,7 +12,7 @@ jobs:
     executor: microscanner/default
     steps:
       - checkout
-      - run: docker build -t circleci/node:$CIRCLE_BRANCH.$CIRCLE_BUILD_NUM .
+      - run: docker build -t circleci/node:latest .
 
 workflows:
   scan-image:
@@ -22,4 +22,4 @@ workflows:
           requires: 
             - docker-build
           context: ttrahan
-          image: circleci/node:$CIRCLE_BRANCH.$CIRCLE_BUILD_NUM
+          image: circleci/node:latest
