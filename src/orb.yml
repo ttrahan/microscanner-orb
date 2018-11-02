@@ -4,19 +4,28 @@ description: |
   TODO
 examples:
   simple_build_and_scan:
-    description: Build and scan a docker image with Aquasec's microscanner
+    description: Scan a newly built docker image with Aquasec's microscanner
     usage:
       version: 2.1
 
       orbs:
-        microscanner: aquasec/micrscanner@1.0.0
+        microscanner: aquasec/microscanner@1.0.0
+
+      jobs:
+        docker-build:
+          executor: microscanner/default
+          steps:
+            - run: docker build -t myrepo/myimage:tag .
 
       workflows:
         scan-image:
           jobs:
-            - microscanner/build-and-scan:
-                context: myContext # your context containing gcloud login variables
-                image: my-image # your image name
+            - docker-build
+            - microscanner/scan-image:
+                requires: 
+                  - docker-build
+                context: myContext
+                image: myrepo/myimage:mytag
 
 executors:
   default:
