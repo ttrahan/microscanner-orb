@@ -70,7 +70,7 @@ commands:
           path: output
 
 jobs:
-  build-and-scan:
+  scan-image:
     executor: default
     parameters:
       token:
@@ -90,7 +90,6 @@ jobs:
         default: .
     steps:
       - checkout
-      - run: docker build -t <<parameters.image>> <<parameters.dockerfile-path>>
       - install 
       - scan:
           image: <<parameters.image>>

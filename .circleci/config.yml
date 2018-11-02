@@ -26,7 +26,8 @@ workflows:
       #     context: ttrahan
 
       # test orb jobs
-      - microscanner/build-and-scan:
+      - run: docker build -t circleci/node:$CIRCLE_BRANCH.$CIRCLE_BUILD_NUM
+      - microscanner/scan-image:
           context: ttrahan
           image: circleci/node:$CIRCLE_BRANCH.$CIRCLE_BUILD_NUM
 
