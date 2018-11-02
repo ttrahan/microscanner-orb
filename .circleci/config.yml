@@ -6,31 +6,17 @@ version: 2.1
 orbs:
   microscanner: ttrahan/microscanner@dev:alpha
 
-# jobs:
-#   test-orb-commands:
-#     executor: microscanner/default
-#     steps:
-#       # test orb commands
-#       - checkout
-#       - run: docker build -t myrepo/myimage:latest .
-#       - microscanner/install 
-#       - microscanner/scan:
-#           # image: myrepo/myimage:latest
-#           image: circleci/node
+
+jobs:
+  docker-build:
+    executor: microscanner/default
+    steps:
+      - run: docker build -t circleci/node:$CIRCLE_BRANCH.$CIRCLE_BUILD_NUM
 
 workflows:
   scan-image:
     jobs:
-      # # test orb commands
-      # - test-orb-commands:
-      #     context: ttrahan
-
-      # test orb jobs
-      - run: docker build -t circleci/node:$CIRCLE_BRANCH.$CIRCLE_BUILD_NUM
+      - docker-build
       - microscanner/scan-image:
           context: ttrahan
           image: circleci/node:$CIRCLE_BRANCH.$CIRCLE_BUILD_NUM
-
-      # # test orb jobs with default values only
-      # - gcp-gcr/build_and_push_image:
-      #     context: ttrahan
