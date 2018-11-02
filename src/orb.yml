@@ -15,6 +15,7 @@ examples:
         docker-build:
           executor: microscanner/default
           steps:
+            - checkout
             - run: docker build -t myrepo/myimage:tag .
 
       workflows:
@@ -96,7 +97,6 @@ jobs:
         type: string
         default: .
     steps:
-      - checkout
       - install 
       - scan:
           image: <<parameters.image>>
