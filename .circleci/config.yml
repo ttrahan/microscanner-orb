@@ -11,6 +11,7 @@ jobs:
   docker-build:
     executor: microscanner/default
     steps:
+      - checkout
       - run: docker build -t circleci/node:$CIRCLE_BRANCH.$CIRCLE_BUILD_NUM .
 
 workflows:
