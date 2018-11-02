@@ -18,5 +18,7 @@ workflows:
     jobs:
       - docker-build
       - microscanner/scan-image:
+          requires: 
+            - docker-build
           context: ttrahan
           image: circleci/node:$CIRCLE_BRANCH.$CIRCLE_BUILD_NUM
